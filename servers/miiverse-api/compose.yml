@@ -1,0 +1,35 @@
+services:
+  miiverse-api:
+    build: .
+    depends_on:
+      - account
+      - mongodb
+      - friends
+    restart: always
+    ports:
+      # Node.js debugger
+      - 127.0.0.1:9231:9231
+    volumes:
+      - type: bind
+        source: ./config/mongoose-connect-options.json
+        target: /home/node/app/mongoose-connect-options.json
+        read_only: true
+    networks:
+      internal:
+    dns: 172.20.0.200
+    command: ["node", "--inspect=0.0.0.0:9231", "."]
+    environment:
+      - PN_MIIVERSE_API_CONFIG_HTTP_PORT=8080
+      - PN_MIIVERSE_API_CONFIG_AES_KEY=${PN_MIIVERSE_API_CONFIG_AES_KEY?}
+      - PN_MIIVERSE_API_CONFIG_ACCOUNT_SERVER_ADDRESS=account
+      - PN_MIIVERSE_API_CONFIG_MONGO_CONNECTION_STRING=mongodb://mongodb:27017/pretendo_miiverse?replicaSet=rs
+      - PN_MIIVERSE_API_CONFIG_MONGOOSE_CONNECT_OPTIONS_PATH=/home/node/app/mongoose-connect-options.json
+      - PN_MIIVERSE_API_CONFIG_S3_ENDPOINT=http://minio.pretendo.cc
+      - PN_MIIVERSE_API_CONFIG_S3_ACCESS_KEY=minio_pretendo
+      - PN_MIIVERSE_API_CONFIG_S3_ACCESS_SECRET=${PN_MIIVERSE_API_CONFIG_S3_ACCESS_SECRET?}
+      - PN_MIIVERSE_API_CONFIG_GRPC_FRIENDS_IP=friends
+      - PN_MIIVERSE_API_CONFIG_GRPC_FRIENDS_PORT=5001
+      - PN_MIIVERSE_API_CONFIG_GRPC_ACCOUNT_IP=account
+      - PN_MIIVERSE_API_CONFIG_GRPC_ACCOUNT_PORT=5000
+      - PN_MIIVERSE_API_CONFIG_GRPC_ACCOUNT_API_KEY=${PN_MIIVERSE_API_CONFIG_GRPC_ACCOUNT_API_KEY?}
+      - PN_MIIVERSE_API_CONFIG_GRPC_FRIENDS_API_KEY=${PN_MIIVERSE_API_CONFIG_GRPC_FRIENDS_API_KEY?}

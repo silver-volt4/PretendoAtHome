@@ -1,0 +1,11 @@
+services:
+  ansible:
+    build: .
+    entrypoint: ansible-playbook
+    command: /pretendo/support/ansible/playbook.yml
+    volumes:
+      - type: bind
+        source: ../../
+        target: /pretendo
+        read_only: true
+  

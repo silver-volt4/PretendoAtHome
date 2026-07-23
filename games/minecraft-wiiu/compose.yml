@@ -1,0 +1,25 @@
+services:
+  minecraft-wiiu:
+    build: .
+    depends_on:
+      - account
+    restart: unless-stopped
+    ports:
+      # Go delve debugger
+      - 127.0.0.1:2350:2345
+      # Authentication server
+      - 6008:6008/udp
+      # Secure server
+      - 6009:6009/udp
+    networks:
+      internal:
+    dns: 172.20.0.200
+    environment:
+      - PN_MINECRAFT_AUTHENTICATION_SERVER_PORT=6008
+      - PN_MINECRAFT_SECURE_SERVER_PORT=6009
+      - PN_MINECRAFT_ACCOUNT_GRPC_HOST=account
+      - PN_MINECRAFT_ACCOUNT_GRPC_PORT=5000
+      - PN_MINECRAFT_ALLOW_PUBLIC_MATCHMAKING=0
+      - PN_MINECRAFT_ACCOUNT_GRPC_API_KEY=${PN_MINECRAFT_ACCOUNT_GRPC_API_KEY?}
+      - PN_MINECRAFT_KERBEROS_PASSWORD=${PN_MINECRAFT_KERBEROS_PASSWORD?}
+      - PN_MINECRAFT_SECURE_SERVER_HOST=${PN_MINECRAFT_SECURE_SERVER_HOST?}

@@ -1,0 +1,19 @@
+services:
+  website:
+    build: .
+    depends_on:
+      - account
+      - mongodb
+    restart: always
+    ports:
+      # Node.js debugger
+      - 127.0.0.1:9230:9230
+    volumes:
+      - type: bind
+        source: ./config/website-config.json
+        target: /home/node/app/config.json
+        read_only: true
+    networks:
+      internal:
+    command: ["node", "--inspect=0.0.0.0:9230", "."]
+    dns: 172.20.0.200

@@ -1,0 +1,25 @@
+volumes:
+  mongodb-database:
+
+services:
+  mongodb:
+    # TODO: Set up authentication
+    image: mongo:latest
+    depends_on:
+      - coredns-internal
+    restart: always
+    ports:
+      # For connecting with mongosh or MongoDB Compass
+      - 127.0.0.1:27017:27017
+    volumes:
+      - type: bind
+        source: mongod.conf
+        target: /etc/mongod.conf
+        read_only: true
+      - type: volume
+        source: mongodb-database
+        target: /data/db
+    networks:
+      internal:
+    dns: 172.20.0.200
+    command: --config "/etc/mongod.conf" --replSet rs

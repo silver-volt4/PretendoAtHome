@@ -1,0 +1,22 @@
+services:
+  adminer:
+    image: adminer:latest
+    depends_on:
+      - coredns-internal
+      - postgres
+    restart: always
+    ports:
+      # Adminer web interface
+      - 127.0.0.1:8085:8080
+    volumes:
+      - type: bind
+        source: ./config/adminer-login-servers.php
+        target: /var/www/html/plugins-enabled/login-servers.php
+        read_only: true
+    networks:
+      internal:
+    dns: 172.20.0.200
+    environment:
+      - ADMINER_DEFAULT_SERVER=postgres
+      - ADMINER_DESIGN=flat
+      - ADMINER_PLUGINS="dump-date dump-json dump-xml dump-zip tables-filter"

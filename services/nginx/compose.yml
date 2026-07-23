@@ -1,0 +1,23 @@
+services:
+  nginx:
+    image: nginx:mainline-alpine
+    depends_on:
+      - coredns-internal
+      - mitmproxy-pretendo
+    restart: always
+    ports:
+      # HTTP
+      - 80:80
+    volumes:
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx/nginx.conf
+        read_only: true
+      - type: bind
+        source: ./conf.d
+        target: /etc/nginx/conf.d/
+        read_only: true
+    networks:
+      default:
+      internal:
+    dns: 172.20.0.200

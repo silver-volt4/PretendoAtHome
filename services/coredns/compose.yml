@@ -1,0 +1,14 @@
+services:
+  coredns-internal:
+    # This responds to DNS queries from the internal network of containers, redirecting Pretendo to the Nginx container
+    image: coredns/coredns:latest
+    restart: always
+    volumes:
+      - type: bind
+        source: internal.Corefile
+        target: /etc/coredns/Corefile
+        read_only: true
+    networks:
+      internal:
+        ipv4_address: 172.20.0.200
+    command: -conf /etc/coredns/Corefile

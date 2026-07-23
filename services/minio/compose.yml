@@ -1,0 +1,27 @@
+volumes:
+  minio-s3-data:
+
+services:
+  minio:
+    image: minio/minio:latest
+    depends_on:
+      - coredns-internal
+      - nginx
+    restart: always
+    ports:
+      # Web console
+      - 127.0.0.1:8083:8083
+    volumes:
+      - type: volume
+        source: minio-s3-data
+        target: /data
+    networks:
+      internal:
+    dns: 172.20.0.200
+    environment:
+      - MINIO_VOLUMES=/data
+      - MINIO_DOMAIN=minio.pretendo.cc
+      - MINIO_ROOT_USER=minio_pretendo
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD?}
+      - MINIO_BROWSER_REDIRECT=false
+    command: server --console-address ":8083"

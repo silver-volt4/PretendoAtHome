@@ -1,0 +1,27 @@
+services:
+  splatoon:
+    build: .
+    depends_on:
+      - account
+      - mongodb
+    restart: unless-stopped
+    ports:
+      # Go delve debugger
+      - 127.0.0.1:2349:2345
+      # Authentication server
+      - 6006:6006/udp
+      # Secure server
+      - 6007:6007/udp
+    networks:
+      internal:
+    dns: 172.20.0.200
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/pretendo_account?replicaSet=rs
+      - PN_SPLATOON_AUTHENTICATION_SERVER_PORT=6006
+      - PN_SPLATOON_SECURE_SERVER_PORT=6007
+      - PN_SPLATOON_ACCOUNT_GRPC_HOST=account
+      - PN_SPLATOON_ACCOUNT_GRPC_PORT=5000
+      - PN_SPLATOON_ACCOUNT_GRPC_API_KEY=${PN_SPLATOON_ACCOUNT_GRPC_API_KEY?}
+      - PN_SPLATOON_POSTGRES_URI=${PN_SPLATOON_POSTGRES_URI?}
+      - PN_SPLATOON_KERBEROS_PASSWORD=${PN_SPLATOON_KERBEROS_PASSWORD?}
+      - PN_SPLATOON_SECURE_SERVER_HOST=${PN_SPLATOON_SECURE_SERVER_HOST?}

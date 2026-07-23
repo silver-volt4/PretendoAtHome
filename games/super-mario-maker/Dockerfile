@@ -1,0 +1,1 @@
+FROM ghcr.io/pretendonetwork/super-mario-maker

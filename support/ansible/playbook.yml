@@ -1,0 +1,15 @@
+- name: MongoDB setup
+  hosts: localhost
+  tasks:
+  - name: Ensure replicaset rs exists
+    community.mongodb.mongodb_replicaset:
+      login_host: mongodb
+      replica_set: rs
+      validate: false
+      members: mongodb:27017
+  - name: Wait for the replicaset to stabilise
+    community.mongodb.mongodb_status:
+      login_host: mongodb
+      replica_set: rs
+      poll: 1
+      interval: 2

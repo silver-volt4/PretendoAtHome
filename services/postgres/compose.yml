@@ -1,0 +1,22 @@
+volumes:
+  postgres-database:
+
+services:
+  postgres:
+    image: postgres:alpine
+    depends_on:
+      - coredns-internal
+    restart: always
+    ports:
+      # For connecting with pgAdmin
+      - 127.0.0.1:5432:5432
+    volumes:
+      - type: volume
+        source: postgres-database
+        target: /var/lib/postgresql/data
+    networks:
+      internal:
+    dns: 172.20.0.200
+    environment:
+      - POSTGRES_USER=postgres_pretendo
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?}

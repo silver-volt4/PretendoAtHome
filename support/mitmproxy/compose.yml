@@ -1,0 +1,18 @@
+volumes:
+  mitmproxy-pretendo-data:
+
+services:
+  mitmproxy-pretendo:
+    image: ghcr.io/matthewl246/mitmproxy-pretendo:local
+    restart: always
+    ports:
+      # Proxy server
+      - 8080:8080
+      # Mitmweb interface
+      - 127.0.0.1:8081:8081
+    volumes:
+      - type: volume
+        source: mitmproxy-pretendo-data
+        target: /home/mitmproxy/.mitmproxy
+    command: mitmweb --web-host 0.0.0.0
+    tty: true
