@@ -11,7 +11,7 @@ services:
       - 127.0.0.1:9231:9231
     volumes:
       - type: bind
-        source: ./config/mongoose-connect-options.json
+        source: ./mongoose-connect-options.json
         target: /home/node/app/mongoose-connect-options.json
         read_only: true
     networks:

@@ -1,1 +1,1 @@
-FROM ghcr.io/pretendonetwork/pikmin-3
+FROM ghcr.io/pretendonetwork/minecraft-wiiu

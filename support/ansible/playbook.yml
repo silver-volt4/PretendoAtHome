@@ -13,3 +13,33 @@
       replica_set: rs
       poll: 1
       interval: 2
+
+- name: PostgreSQL setup
+  hosts: localhost
+  vars:
+    postgres_user: "{{ lookup('ansible.builtin.env', 'POSTGRES_USER') }}"
+    postgres_password: "{{ lookup('ansible.builtin.env', 'POSTGRES_PASSWORD') }}"
+  tasks:
+    - name: Create DB for SMM
+      community.postgresql.postgresql_db:
+        name: "super_mario_maker"
+        owner: "{{ postgres_user }}"
+        login_host: "postgres"
+        login_user: "{{ postgres_user }}"
+        login_password: "{{ postgres_password }}"
+        state: present
+
+- name: MinIO setup
+  hosts: localhost
+  vars:
+    postgres_user: "{{ lookup('ansible.builtin.env', 'POSTGRES_USER') }}"
+    postgres_password: "{{ lookup('ansible.builtin.env', 'POSTGRES_PASSWORD') }}"
+  tasks:
+    - name: Create DB for SMM
+      community.postgresql.postgresql_db:
+        name: "super_mario_maker"
+        owner: "{{ postgres_user }}"
+        login_host: "postgres"
+        login_user: "{{ postgres_user }}"
+        login_password: "{{ postgres_password }}"
+        state: present

@@ -19,4 +19,4 @@ services:
     environment:
       - ADMINER_DEFAULT_SERVER=postgres
       - ADMINER_DESIGN=flat
-      - ADMINER_PLUGINS="dump-date dump-json dump-xml dump-zip tables-filter"
+      - ADMINER_PLUGINS=dump-date dump-json dump-xml dump-zip tables-filter

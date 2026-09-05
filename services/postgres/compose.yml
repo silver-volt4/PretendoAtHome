@@ -13,7 +13,7 @@ services:
     volumes:
       - type: volume
         source: postgres-database
-        target: /var/lib/postgresql/data
+        target: /var/lib/postgresql
     networks:
       internal:
     dns: 172.20.0.200

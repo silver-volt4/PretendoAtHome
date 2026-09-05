@@ -10,7 +10,7 @@ services:
       - 127.0.0.1:9230:9230
     volumes:
       - type: bind
-        source: ./config/website-config.json
+        source: config.json
         target: /home/node/app/config.json
         read_only: true
     networks:

@@ -3,9 +3,14 @@ services:
     build: .
     entrypoint: ansible-playbook
     command: /pretendo/support/ansible/playbook.yml
+    networks:
+      internal:
+    dns: 172.20.0.200
     volumes:
       - type: bind
         source: ../../
         target: /pretendo
         read_only: true
-  
+    environment:
+      - POSTGRES_USER=postgres_pretendo
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?}
