@@ -83,7 +83,7 @@ def run_module():
 
         if state == "absent":
             if old:
-                servers.delete_one({"_id": old._id})
+                servers.delete_one({"_id": old["_id"]})
             continue
 
         if not old:
@@ -104,9 +104,9 @@ def run_module():
         if not old:
             servers.insert_one(new)
         else:
-            servers.update_one({"_id": old._id}, {"$set": new})
+            servers.update_one({"_id": old["_id"]}, {"$set": new})
 
-    result = dict(changed=True, original_message="", message="")
+    result = dict(ok=True, original_message="", message="")
 
     module.exit_json(**result)
 

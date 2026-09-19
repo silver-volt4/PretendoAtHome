@@ -20,21 +20,21 @@
       create_nex_server:
         mongo_connection_string: mongodb://mongodb:27017/pretendo_account?replicaSet=rs
         service_name: Friend List
-        game_server_id: 00003200
+        game_server_id: "00003200"
         title_ids:
           # Not in the title database but seems to be what the Wii U sends
-          - 0005001010001C00
+          - "0005001010001C00"
           # Wii U Friend List
-          - 000500301001500A
-          - 000500301001510A
-          - 000500301001520A
+          - "000500301001500A"
+          - "000500301001510A"
+          - "000500301001520A"
           # 3DS friends system-module
-          - 0004013000003202
+          - "0004013000003202"
           # 3DS Friend List applet
-          - 0004003000008D02
-          - 0004003000009602
-          - 0004003000009F02
-          - 000400300000AF02
+          - "0004003000008D02"
+          - "0004003000009602"
+          - "0004003000009F02"
+          - "000400300000AF02"
         ip: "{{ machine_ip }}"
         port: 6000
         device: 1

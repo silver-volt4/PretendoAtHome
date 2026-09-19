@@ -10,7 +10,7 @@ services:
       - 127.0.0.1:8085:8080
     volumes:
       - type: bind
-        source: ./config/adminer-login-servers.php
+        source: ./adminer-login-servers.php
         target: /var/www/html/plugins-enabled/login-servers.php
         read_only: true
     networks:
