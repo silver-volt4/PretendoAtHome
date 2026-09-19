@@ -1,0 +1,14 @@
+- name: MinIO setup
+  hosts: localhost
+  vars:
+    minio_url: "{{ lookup('ansible.builtin.env', 'MINIO_URL') }}"
+    minio_user: "{{ lookup('ansible.builtin.env', 'MINIO_USER') }}"
+    minio_password: "{{ lookup('ansible.builtin.env', 'MINIO_PASSWORD') }}"
+  tasks:
+    - name: Create bucket for SMM
+      amazon.aws.s3_bucket:
+        name: super-mario-maker
+        state: present
+        endpoint_url: "{{ minio_url }}"
+        access_key: "{{ minio_user }}"
+        secret_key: "{{ minio_password }}"

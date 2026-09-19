@@ -8,7 +8,7 @@ RUN apk add py3-mongo
 RUN ansible-galaxy collection install community.postgresql
 RUN apk add py3-psycopg2
 
-RUN ansible-galaxy collection install dubzland.minio
-RUN apk add minio-client
+RUN ansible-galaxy collection install amazon.aws
+RUN apk add py3-boto3
 
 ENTRYPOINT [ "ansible" ]

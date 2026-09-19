@@ -1,0 +1,46 @@
+- name: MongoDB setup
+  hosts: localhost
+  vars:
+    machine_ip: "{{ lookup('ansible.builtin.env', 'MACHINE_IP') }}"
+    friends_aes_key: "{{ lookup('ansible.builtin.env', 'PN_FRIENDS_CONFIG_AES_KEY') }}"
+  tasks:
+    - name: Ensure replicaset rs exists
+      community.mongodb.mongodb_replicaset:
+        login_host: mongodb
+        replica_set: rs
+        validate: false
+        members: mongodb:27017
+    - name: Wait for the replicaset to stabilise
+      community.mongodb.mongodb_status:
+        login_host: mongodb
+        replica_set: rs
+        poll: 1
+        interval: 2
+    - name: NEX Server for Friends List
+      create_nex_server:
+        mongo_connection_string: mongodb://mongodb:27017/pretendo_account?replicaSet=rs
+        service_name: Friend List
+        game_server_id: 00003200
+        title_ids:
+          # Not in the title database but seems to be what the Wii U sends
+          - 0005001010001C00
+          # Wii U Friend List
+          - 000500301001500A
+          - 000500301001510A
+          - 000500301001520A
+          # 3DS friends system-module
+          - 0004013000003202
+          # 3DS Friend List applet
+          - 0004003000008D02
+          - 0004003000009602
+          - 0004003000009F02
+          - 000400300000AF02
+        ip: "{{ machine_ip }}"
+        port: 6000
+        device: 1
+        aes_key: "{{ friends_aes_key }}"
+        access_levels:
+          - prod
+          - test
+          - dev
+        state: present

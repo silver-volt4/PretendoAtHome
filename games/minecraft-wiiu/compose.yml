@@ -5,8 +5,6 @@ services:
       - account
     restart: unless-stopped
     ports:
-      # Go delve debugger
-      - 127.0.0.1:2350:2345
       # Authentication server
       - 6008:6008/udp
       # Secure server
@@ -23,3 +21,6 @@ services:
       - PN_MINECRAFT_ACCOUNT_GRPC_API_KEY=${PN_ACT_CONFIG_GRPC_MASTER_API_KEY_API?}
       - PN_MINECRAFT_KERBEROS_PASSWORD=${PN_MINECRAFT_KERBEROS_PASSWORD?}
       - PN_MINECRAFT_SECURE_SERVER_HOST=${PN_MINECRAFT_SECURE_SERVER_HOST?}
+      - PN_MINECRAFT_FRIENDS_GRPC_HOST=friends
+      - PN_MINECRAFT_FRIENDS_GRPC_PORT=5001
+      - PN_MINECRAFT_FRIENDS_GRPC_API_KEY=${PN_FRIENDS_CONFIG_GRPC_API_KEY}

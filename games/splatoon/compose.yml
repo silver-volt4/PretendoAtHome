@@ -6,8 +6,6 @@ services:
       - mongodb
     restart: unless-stopped
     ports:
-      # Go delve debugger
-      - 127.0.0.1:2349:2345
       # Authentication server
       - 6006:6006/udp
       # Secure server
@@ -25,3 +23,6 @@ services:
       - PN_SPLATOON_POSTGRES_URI=postgres://postgres_pretendo:${POSTGRES_PASSWORD?}@postgres/splatoon?sslmode=disable
       - PN_SPLATOON_KERBEROS_PASSWORD=${PN_SPLATOON_KERBEROS_PASSWORD?}
       - PN_SPLATOON_SECURE_SERVER_HOST=${PN_SPLATOON_SECURE_SERVER_HOST?}
+      - PN_SPLATOON_FRIENDS_GRPC_HOST=friends
+      - PN_SPLATOON_FRIENDS_GRPC_PORT=5001
+      - PN_SPLATOON_FRIENDS_GRPC_API_KEY=${PN_FRIENDS_CONFIG_GRPC_API_KEY}
