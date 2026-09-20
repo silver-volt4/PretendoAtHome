@@ -1,6 +1,6 @@
 services:
   pikmin-3:
-    build: .
+    image: ghcr.io/pretendonetwork/pikmin-3
     depends_on:
       - account
       - postgres
@@ -21,4 +21,4 @@ services:
       - PN_PIKMIN3_ACCOUNT_GRPC_API_KEY=${PN_ACT_CONFIG_GRPC_MASTER_API_KEY_API?}
       - PN_PIKMIN3_POSTGRES_URI=postgres://postgres_pretendo:${POSTGRES_PASSWORD?}@postgres/pikmin3?sslmode=disable
       - PN_PIKMIN3_KERBEROS_PASSWORD=${PN_PIKMIN3_KERBEROS_PASSWORD?}
-      - PN_PIKMIN3_SECURE_SERVER_HOST=${PN_PIKMIN3_SECURE_SERVER_HOST?}
+      - PN_PIKMIN3_SECURE_SERVER_HOST=${MACHINE_IP?}

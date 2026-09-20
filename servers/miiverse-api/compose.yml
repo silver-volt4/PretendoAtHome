@@ -1,6 +1,6 @@
 services:
   miiverse-api:
-    build: .
+    image: ghcr.io/pretendonetwork/miiverse-api
     depends_on:
       - account
       - mongodb

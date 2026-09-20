@@ -1,6 +1,6 @@
 services:
   friends:
-    build: .
+    image: ghcr.io/pretendonetwork/friends:latest
     depends_on:
       - account
       - postgres
@@ -25,5 +25,5 @@ services:
       - PN_FRIENDS_CONFIG_POSTGRES_MAX_CONNECTIONS=128
       - PN_FRIENDS_CONFIG_POSTGRES_URI=postgres://postgres_pretendo:${POSTGRES_PASSWORD?}@postgres/friends?sslmode=disable
       - PN_FRIENDS_CONFIG_SECURE_PASSWORD=${PN_FRIENDS_CONFIG_SECURE_PASSWORD?}
-      - PN_FRIENDS_CONFIG_SECURE_SERVER_HOST=${PN_FRIENDS_SECURE_SERVER_HOST?}
+      - PN_FRIENDS_CONFIG_SECURE_SERVER_HOST=${MACHINE_IP?}
       - PN_FRIENDS_CONFIG_SECURE_SERVER_PORT=6001

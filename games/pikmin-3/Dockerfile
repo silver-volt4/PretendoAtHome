@@ -1,1 +1,0 @@
-FROM ghcr.io/pretendonetwork/pikmin-3

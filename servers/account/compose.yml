@@ -1,6 +1,6 @@
 services:
   account:
-    build: .
+    image: ghcr.io/pretendonetwork/account
     depends_on:
       - coredns-internal
       - nginx

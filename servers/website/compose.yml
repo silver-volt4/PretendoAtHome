@@ -1,6 +1,6 @@
 services:
   website:
-    build: .
+    image: ghcr.io/pretendonetwork/website
     depends_on:
       - account
       - mongodb

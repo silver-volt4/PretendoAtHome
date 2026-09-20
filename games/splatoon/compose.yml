@@ -1,6 +1,6 @@
 services:
   splatoon:
-    build: .
+    image: ghcr.io/pretendonetwork/splatoon
     depends_on:
       - account
       - mongodb
@@ -22,7 +22,7 @@ services:
       - PN_SPLATOON_ACCOUNT_GRPC_API_KEY=${PN_ACT_CONFIG_GRPC_MASTER_API_KEY_API?}
       - PN_SPLATOON_POSTGRES_URI=postgres://postgres_pretendo:${POSTGRES_PASSWORD?}@postgres/splatoon?sslmode=disable
       - PN_SPLATOON_KERBEROS_PASSWORD=${PN_SPLATOON_KERBEROS_PASSWORD?}
-      - PN_SPLATOON_SECURE_SERVER_HOST=${PN_SPLATOON_SECURE_SERVER_HOST?}
+      - PN_SPLATOON_SECURE_SERVER_HOST=${MACHINE_IP?}
       - PN_SPLATOON_FRIENDS_GRPC_HOST=friends
       - PN_SPLATOON_FRIENDS_GRPC_PORT=5001
       - PN_SPLATOON_FRIENDS_GRPC_API_KEY=${PN_FRIENDS_CONFIG_GRPC_API_KEY}

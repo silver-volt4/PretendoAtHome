@@ -1,6 +1,6 @@
 services:
   boss:
-    build: .
+    image: ghcr.io/pretendonetwork/boss
     depends_on:
       - account
       - mongodb

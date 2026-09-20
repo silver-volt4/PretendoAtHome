@@ -1,6 +1,6 @@
 services:
   juxtaposition-ui:
-    build: .
+    image: ghcr.io/pretendonetwork/juxtaposition-ui
     depends_on:
       - account
       - mongodb

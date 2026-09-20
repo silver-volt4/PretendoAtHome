@@ -3,7 +3,7 @@ volumes:
 
 services:
   minio:
-    image: minio/minio:latest
+    image: quay.io/minio/minio:latest
     depends_on:
       - coredns-internal
       - nginx

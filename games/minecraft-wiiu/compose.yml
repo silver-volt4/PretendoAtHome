@@ -1,6 +1,6 @@
 services:
   minecraft-wiiu:
-    build: .
+    image: ghcr.io/pretendonetwork/minecraft-wiiu
     depends_on:
       - account
     restart: unless-stopped
@@ -20,7 +20,7 @@ services:
       - PN_MINECRAFT_ALLOW_PUBLIC_MATCHMAKING=0
       - PN_MINECRAFT_ACCOUNT_GRPC_API_KEY=${PN_ACT_CONFIG_GRPC_MASTER_API_KEY_API?}
       - PN_MINECRAFT_KERBEROS_PASSWORD=${PN_MINECRAFT_KERBEROS_PASSWORD?}
-      - PN_MINECRAFT_SECURE_SERVER_HOST=${PN_MINECRAFT_SECURE_SERVER_HOST?}
+      - PN_MINECRAFT_SECURE_SERVER_HOST=${MACHINE_IP?}
       - PN_MINECRAFT_FRIENDS_GRPC_HOST=friends
       - PN_MINECRAFT_FRIENDS_GRPC_PORT=5001
       - PN_MINECRAFT_FRIENDS_GRPC_API_KEY=${PN_FRIENDS_CONFIG_GRPC_API_KEY}

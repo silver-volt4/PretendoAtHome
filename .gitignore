@@ -3,3 +3,7 @@
 
 # Generated files
 /compose.yml
+
+# Convention for locally overriding some of the docker containers
+override.Dockerfile
+override/
