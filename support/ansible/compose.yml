@@ -18,4 +18,4 @@ services:
       - MINIO_URL=http://minio.pretendo.cc
       - MINIO_USER=minio_pretendo
       - MINIO_PASSWORD=${MINIO_ROOT_PASSWORD?}
-      - PN_FRIENDS_CONFIG_AES_KEY=${PN_FRIENDS_CONFIG_AES_KEY?}
+      - PN_FRIENDS_CONFIG_PID_HMAC_KEY=${PN_FRIENDS_CONFIG_PID_HMAC_KEY?}

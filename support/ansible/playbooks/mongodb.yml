@@ -2,7 +2,7 @@
   hosts: localhost
   vars:
     machine_ip: "{{ lookup('ansible.builtin.env', 'MACHINE_IP') }}"
-    friends_aes_key: "{{ lookup('ansible.builtin.env', 'PN_FRIENDS_CONFIG_AES_KEY') }}"
+    friends_aes_key: "{{ lookup('ansible.builtin.env', 'PN_FRIENDS_CONFIG_PID_HMAC_KEY') }}"
   tasks:
     - name: Ensure replicaset rs exists
       community.mongodb.mongodb_replicaset:
