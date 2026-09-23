@@ -12,3 +12,10 @@
         endpoint_url: "{{ minio_url }}"
         access_key: "{{ minio_user }}"
         secret_key: "{{ minio_password }}"
+    - name: Create bucket for Account
+      amazon.aws.s3_bucket:
+        name: account
+        state: present
+        endpoint_url: "{{ minio_url }}"
+        access_key: "{{ minio_user }}"
+        secret_key: "{{ minio_password }}"

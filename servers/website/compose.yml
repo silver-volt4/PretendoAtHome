@@ -4,7 +4,15 @@ services:
     depends_on:
       - account
       - mongodb
+    volumes:
+      - type: bind
+        source: ./debug-image.png
+        target: /home/node/app/.output/public/assets/images/n2ds.png
+        read_only: true
     restart: always
     networks:
       internal:
     dns: 172.20.0.200
+    environment:
+      - PN_WEBSITE_GRPC_HOST=account:5000
+      - PN_WEBSITE_GRPC_API_KEY=${PN_ACT_CONFIG_GRPC_MASTER_API_KEY_API?}
