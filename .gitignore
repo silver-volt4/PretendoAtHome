@@ -1,6 +1,9 @@
 # Local environment variables (used for secrets)
 .env
 
+# For Ansible module development
+.venv
+
 # Generated files
 /compose.yml
 

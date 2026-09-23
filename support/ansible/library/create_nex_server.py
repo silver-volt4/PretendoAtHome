@@ -1,5 +1,7 @@
 from pymongo import MongoClient
+
 from ansible.module_utils.basic import AnsibleModule
+from ansible.module_utils.mongo_document import accumulate_result_dicts, ensure
 
 module_args = {
     "mongo_connection_string": {
@@ -48,10 +50,6 @@ module_args = {
 }
 
 
-def copy_and_diff(obj: dict, key: str, new_value: any):
-    pass
-
-
 def run_module():
     module = AnsibleModule(argument_spec=module_args, supports_check_mode=True)
 
@@ -73,40 +71,24 @@ def run_module():
     # Assuming unique service names
     # TODO: maybe use some kind of unique ID in the future?
 
+    result = {}
+
     for level in access_levels:
-        old = servers.find_one(
-            {
-                "service_name": service_name,
-                "access_mode": level,
-            }
+        document = {
+            "service_name": service_name,
+            "game_server_id": game_server_id,
+            "title_ids": title_ids,
+            "ip": ip,
+            "port": port,
+            "device": device,
+            "aes_key": aes_key,
+            "access_mode": level,
+        }
+
+        ensure_result = ensure(
+            servers, document, ["access_mode", "service_name"], state
         )
-
-        if state == "absent":
-            if old:
-                servers.delete_one({"_id": old["_id"]})
-            continue
-
-        if not old:
-            new = {}
-        else:
-            new = old.copy()
-            del new["_id"]
-
-        new["service_name"] = service_name
-        new["game_server_id"] = game_server_id
-        new["title_ids"] = title_ids
-        new["ip"] = ip
-        new["port"] = port
-        new["device"] = device
-        new["aes_key"] = aes_key
-        new["access_mode"] = level
-
-        if not old:
-            servers.insert_one(new)
-        else:
-            servers.update_one({"_id": old["_id"]}, {"$set": new})
-
-    result = dict(ok=True, original_message="", message="")
+        accumulate_result_dicts(result, ensure_result)
 
     module.exit_json(**result)
 
