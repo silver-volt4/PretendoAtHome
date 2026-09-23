@@ -1,8 +1,10 @@
 - name: MongoDB setup
   hosts: localhost
   vars:
+    mongo_connection_string: mongodb://mongodb:27017/pretendo_account?replicaSet=rs
     machine_ip: "{{ lookup('ansible.builtin.env', 'MACHINE_IP') }}"
     friends_aes_key: "{{ lookup('ansible.builtin.env', 'PN_FRIENDS_CONFIG_PID_HMAC_KEY') }}"
+    miiverse_aes_key: "{{ lookup('ansible.builtin.env', 'PN_MIIVERSE_API_CONFIG_AES_KEY') }}"
   tasks:
     - name: Ensure replicaset rs exists
       community.mongodb.mongodb_replicaset:
@@ -18,7 +20,7 @@
         interval: 2
     - name: NEX Server for Friends List
       create_nex_server:
-        mongo_connection_string: mongodb://mongodb:27017/pretendo_account?replicaSet=rs
+        mongo_connection_string: "{{ mongo_connection_string }}"
         service_name: Friend List
         game_server_id: "00003200"
         title_ids:
@@ -39,6 +41,27 @@
         port: 6000
         device: 1
         aes_key: "{{ friends_aes_key }}"
+        access_levels:
+          - prod
+          - test
+          - dev
+        state: present
+    - name: Service for Miiverse
+      create_service:
+        mongo_connection_string: "{{ mongo_connection_string }}"
+        service_name: Miiverse
+        client_id: "87cd32617f1985439ea608c2746e4610"
+        title_ids:
+          # Wii U Miiverse
+          - "000500301001600A"
+          - "000500301001610A"
+          - "000500301001620A"
+          # 3DS Miiverse applet
+          - "000400300000BC02"
+          - "000400300000BD02"
+          - "000400300000BE02"
+        device: 1
+        aes_key: "{{ miiverse_aes_key }}"
         access_levels:
           - prod
           - test
