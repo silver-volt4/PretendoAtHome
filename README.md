@@ -14,7 +14,7 @@ I have decided to divert from the former in the following ways:
 
 - Minimize the use of shell scripts: The only shell script in this project is what builds the aforementioned main compose file. Server maintenance (creation of databases, S3 buckets, etc...) is managed by Ansible. This reduces the dependency on Linux/WSL and simplifies maintenance (and I just dislike shell scripts in general lol)
 
-- Only use a single .env file in the root of the repository. "Constant" environment variables (those that need to be set but aren't necessarily secret) are declared in the compose.yml files, and the required variables get interpolated by Docker at parse time. This means that docker will refuse to run if any variable is missing, but I see this as a benefit; if something is missing, you see it right away instead of having to debug weird behaviour for hours.
+- Only use a single .env file in the root of the repository. "Constant" environment variables (those that need to be set but aren't necessarily secret) are declared in the compose.yml files, and the required variables get interpolated by Docker at parse time. This means that Docker will refuse to run if any variable is missing, but I see this as a benefit; if something is missing, you see it right away instead of having to debug weird behaviour for hours.
 
 ## How to set this up?
 
