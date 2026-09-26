@@ -4,11 +4,6 @@ services:
     depends_on:
       - account
       - mongodb
-    volumes:
-      - type: bind
-        source: ./debug-image.png
-        target: /home/node/app/.output/public/assets/images/n2ds.png
-        read_only: true
     restart: always
     networks:
       internal:
