@@ -1,7 +1,8 @@
 - name: MongoDB setup
   hosts: localhost
   vars:
-    mongo_connection_string: mongodb://mongodb:27017/pretendo_account?replicaSet=rs
+    mongo_pretendo_account: mongodb://mongodb:27017/pretendo_account?replicaSet=rs
+    mongo_pretendo_miiverse: mongodb://mongodb:27017/pretendo_miiverse?replicaSet=rs
     machine_ip: "{{ lookup('ansible.builtin.env', 'MACHINE_IP') }}"
     friends_aes_key: "{{ lookup('ansible.builtin.env', 'PN_FRIENDS_CONFIG_PID_HMAC_KEY') }}"
     miiverse_aes_key: "{{ lookup('ansible.builtin.env', 'PN_MIIVERSE_API_CONFIG_AES_KEY') }}"
@@ -20,7 +21,7 @@
         interval: 2
     - name: NEX Server for Friends List
       create_nex_server:
-        mongo_connection_string: "{{ mongo_connection_string }}"
+        mongo_connection_string: "{{ mongo_pretendo_account }}"
         service_name: Friend List
         game_server_id: "00003200"
         title_ids:
@@ -48,7 +49,7 @@
         state: present
     - name: Service for Miiverse
       create_service:
-        mongo_connection_string: "{{ mongo_connection_string }}"
+        mongo_connection_string: "{{ mongo_pretendo_account }}"
         service_name: Miiverse
         client_id: "87cd32617f1985439ea608c2746e4610"
         title_ids:
@@ -62,6 +63,19 @@
           - "000400300000BE02"
         device: 1
         aes_key: "{{ miiverse_aes_key }}"
+        access_levels:
+          - prod
+          - test
+          - dev
+        state: present
+    - name: Endpoints for Miiverse
+      create_miiverse_endpoint:
+        mongo_connection_string: "{{ mongo_pretendo_miiverse }}"
+        status: 0
+        host: "api.olv.pretendo.cc"
+        api_host: "api.olv.pretendo.cc"
+        portal_host: "portal.olv.pretendo.cc"
+        n3ds_host: "ctr.olv.pretendo.cc"
         access_levels:
           - prod
           - test

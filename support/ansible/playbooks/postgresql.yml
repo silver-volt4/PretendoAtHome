@@ -12,6 +12,14 @@
         login_user: "{{ postgres_user }}"
         login_password: "{{ postgres_password }}"
         state: present
+    - name: Create DB for Miiverse
+      community.postgresql.postgresql_db:
+        name: "miiverse"
+        owner: "{{ postgres_user }}"
+        login_host: "postgres"
+        login_user: "{{ postgres_user }}"
+        login_password: "{{ postgres_password }}"
+        state: present
     - name: Create DB for SMM
       community.postgresql.postgresql_db:
         name: "super_mario_maker"

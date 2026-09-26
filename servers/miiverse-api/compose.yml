@@ -9,6 +9,8 @@ services:
     networks:
       internal:
     dns: 172.20.0.200
+    post_start:
+      - command: npm run migration:deploy
     environment:
       - PN_MIIVERSE_API_ACCOUNT_SERVER_ADDRESS=account
       - PN_MIIVERSE_API_AES_KEY=${PN_MIIVERSE_API_CONFIG_AES_KEY?}
